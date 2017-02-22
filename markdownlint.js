@@ -66,7 +66,12 @@ function lint(lintFiles, config) {
 function printResult(lintResult, hasErrors) {
   if (hasErrors) {
     console.error(lintResult.toString());
-    process.exit(1);
+    var errorCount = Object.keys(lintResult).length;
+    var manyErrors = errorCount && errorCount > 0;
+    var errorsTemplate = manyErrors ? "Errors in %s files." : "Error in %s file.";
+    console.error(errorsTemplate, errorCount);
+    console.error(Object.keys(lintResult).join(", "));
+    // process.exit(1);
   } else {
     console.log(lintResult.toString());
   }
